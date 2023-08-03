@@ -2,10 +2,11 @@ const mysql = require('mysql2');
 const express = require('express');
 const router = express.Router();
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
+  connectionLimit: 10,
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: '123456789',
   database: 'fundasoft',
 });
 
@@ -42,9 +43,43 @@ router.post('/', function (req, res) {
 });
 
 router.delete('/:taskId', function (req, res) {
-  const id = parseInt(req.params.id);
-  tasks = tasks.filter(task => task.id !== id);
-  res.send('La tarea fue borrada con éxito.');
+  const userId = req.query.user;
+  const taskId = parseInt(req.params.taskId);
+
+  connection.query(
+    `DELETE FROM tasks WHERE id = ${taskId} AND user = ${userId}`,
+    function (error, results) {
+      if (error) res.status(500).send('No se pudo eliminar la tarea.');
+
+      res.status(200).send(`Se eliminó la tarea ${taskId}`);
+    }
+  );
+});
+
+router.put('/:taskId', function (req, res) {
+  const userId = req.query.user;
+  const taskId = parseInt(req.params.taskId);
+  const body = req.body;
+  let updates = [];
+
+  const validColumns = ['description', 'done', 'user'];
+
+  validColumns.map(column => {
+    if (body[column] !== undefined) {
+      updates.push(`${column} = '${body[column]}'`);
+    }
+  });
+
+  const queryUpdates = updates.join(', ');
+
+  connection.query(
+    `UPDATE tasks SET ${queryUpdates} WHERE user = ${userId} AND id = ${taskId}`,
+    function (error, results) {
+      if (error) res.status(500).send('No se pudo actualizar la tarea.');
+
+      res.status(200).send(`La tarea ${taskId} se actualizó correctamente`);
+    }
+  );
 });
 
 router.get('/:taskId', function (req, res) {
