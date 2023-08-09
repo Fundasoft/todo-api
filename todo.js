@@ -1,7 +1,12 @@
+//  $ npm i cors (clase 2023-08-02)
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const router = require('./router');
 
+app.use(cors({
+  origin: 'http://localhost:3001'
+}));
 app.use(express.json());
 
 app.use('/todos', router);
