@@ -2,6 +2,13 @@ const mysql = require('mysql2');
 const express = require('express');
 const router = express.Router();
 
+console.log({
+  host            : process.env.MYSQL_HOST,
+  user            : process.env.MYSQL_USER,
+  password        : process.env.MYSQL_SECRET,
+  database        : process.env.MYSQL_DB
+})
+
 const connection = mysql.createPool({
   connectionLimit: 10,
   host: process.env.RDS_HOSTNAME,
