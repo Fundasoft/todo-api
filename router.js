@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 
 console.log({
-  host            : process.env.MYSQL_HOST,
-  user            : process.env.MYSQL_USER,
-  password        : process.env.MYSQL_SECRET,
-  database        : process.env.MYSQL_DB
+  host            : process.env.RDS_HOSTNAME,
+  user            : process.env.RDS_USERNAME,
+  password        : process.env.RDS_PASSWORD,
+  database        : process.env.RDS_PORT
 })
 
 const connection = mysql.createPool({
