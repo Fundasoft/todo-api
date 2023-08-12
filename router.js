@@ -2,20 +2,13 @@ const mysql = require('mysql2');
 const express = require('express');
 const router = express.Router();
 
-console.log({
-  host            : process.env.RDS_HOSTNAME,
-  user            : process.env.RDS_USERNAME,
-  password        : process.env.RDS_PASSWORD,
-  database        : process.env.RDS_PORT
-})
-
 const connection = mysql.createPool({
   connectionLimit: 10,
-  host: process.env.RDS_HOSTNAME,
-  user: process.env.RDS_USERNAME,
-  password: process.env.RDS_PASSWORD,
+  host: 'database-1.cdhgegzqq8i0.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: '123456789',
   database: 'fundasoft',
-  port: process.env.RDS_PORT,
+  port: '3306',
 });
 
 
