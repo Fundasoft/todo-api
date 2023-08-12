@@ -18,6 +18,7 @@ router.get('/', function (req , res) {
   connection.query(
     `SELECT * FROM tasks WHERE user = ${userId}`,
     function (error, results) {
+      console.log(error);
       if (error) res.status(500).send('No se pudieron obtener las tareas.');
 
       res.status(200).json({
