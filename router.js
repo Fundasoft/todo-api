@@ -4,10 +4,11 @@ const router = express.Router();
 
 const connection = mysql.createPool({
   connectionLimit: 10,
-  host: 'localhost',
-  user: 'root',
-  password: '123456789',
+  host: 'database-1.cofmh5duymef.us-east-2.rds.amazonaws.com',
+  user: 'admin',
+  password: '1234cc501',
   database: 'fundasoft',
+  port: '3306'
 });
 
 
