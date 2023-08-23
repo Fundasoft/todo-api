@@ -1,17 +1,18 @@
 const mysql = require('mysql2');
 const express = require('express');
 const router = express.Router();
+require('dotenv').config();
 
 const connection = mysql.createPool({
   connectionLimit: 10,
-  host: 'localhost',
-  user: 'root',
-  password: '123456789',
+  host: 'database-1.ctxrfblyz729.us-east-2.rds.amazonaws.com',
+  user: 'admin',
+  password: process.env.SQL_KEY,
   database: 'fundasoft',
+  port: '3306',
 });
 
-
-router.get('/', function (req , res) {
+router.get('/', function (req, res) {
   const userId = req.query.user;
 
   connection.query(
@@ -28,6 +29,7 @@ router.get('/', function (req , res) {
 
 router.post('/', function (req, res) {
   const description = req.body.description;
+  console.log(description);
   const userId = req.query.user;
   connection.query(
     `INSERT INTO tasks (description, user) VALUES ('${description}', ${userId})`,
@@ -64,7 +66,7 @@ router.put('/:taskId', function (req, res) {
 
   const validColumns = ['description', 'done', 'user'];
 
-  validColumns.map(column => {
+  validColumns.map((column) => {
     if (body[column] !== undefined) {
       updates.push(`${column} = '${body[column]}'`);
     }
