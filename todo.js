@@ -4,7 +4,7 @@ const app = express();
 const router = require('./router');
 
 app.use(cors({
-  origin: 'http://fundasoft-todo-app.s3-website-us-east-1.amazonaws.com',
+  origin: 'http://fundasoft-todo-app-joaquin.s3-website-us-east-1.amazonaws.com',
 }));
 app.use(express.json());
 
